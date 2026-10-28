@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./frontend/src/types", "./node_modules/@types"],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "paths": {
+      "@common/*": ["./frontend/src/common/*"],
+      "@components/*": ["./frontend/src/components/*"],
+      "@pages/*": ["./frontend/src/pages/*"],
+      "@config/*": ["./frontend/src/config/*"],
+      "@services/*": ["./frontend/src/services/*"],
+      "@resource/*": ["./frontend/src/resource/*"],
+      "@utils/*": ["./frontend/src/utils/*"],
+      "@/*": ["./frontend/src/*"]
+    }
+  },
+  "include": ["./frontend/src", "./frontend/src/types"],
+  "exclude": ["node_modules"]
+}

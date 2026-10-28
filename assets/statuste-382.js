@@ -1,0 +1,1 @@
+import{j as s,bX as x}from"./main-pj8werpi.js";function r({tone:t,glyph:a,children:e}){return s.jsxs("span",{className:"el-status-text",children:[s.jsx(x,{tone:t,glyph:a}),s.jsx("span",{children:e})]})}export{r as S};

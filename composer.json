@@ -1,0 +1,63 @@
+{
+  "name": "mcpmate/mcpmate",
+  "description": "McpMate for WordPress",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "brain/monkey": "^2.6",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "phpcompatibility/php-compatibility": "^10.0@alpha",
+    "phpcompatibility/phpcompatibility-paragonie": "^2.0@alpha",
+    "phpcompatibility/phpcompatibility-wp": "^3.0@alpha",
+    "phpstan/extension-installer": "^1",
+    "phpunit/phpunit": "^9.6",
+    "rector/rector": "^2",
+    "sirbrillig/phpcs-variable-analysis": "^2",
+    "szepeviktor/phpstan-wordpress": "^2",
+    "wp-coding-standards/wpcs": "^3.1",
+    "wp-phpunit/wp-phpunit": "^7.1",
+    "yoast/phpunit-polyfills": "^4"
+  },
+  "autoload": {
+    "psr-4": {
+      "McpMate\\": "./backend/app"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "McpMate\\CLI\\": "./cli",
+      "McpMate\\Tests\\": "./tests"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf ./vendor",
+    "reset": "composer clean && composer install",
+    "test": "phpunit --testsuite unit",
+    "test:integration": [
+      "phpunit -c phpunit-integration.xml.dist --testsuite integration",
+      "@test:integration:elementor"
+    ],
+    "test:integration:elementor": [
+      "@putenv MCPMATE_TESTS_ELEMENTOR=1",
+      "phpunit -c phpunit-integration.xml.dist --testsuite elementor"
+    ],
+    "phpcs": "phpcs -s",
+    "phpcs:fix": "phpcbf",
+    "analyze": "phpstan analyse --memory-limit=1G",
+    "rector": "rector process --dry-run",
+    "refactor": "rector process"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    },
+    "platform": {
+      "php": "7.4.33"
+    },
+    "sort-packages": true
+  }
+}

@@ -1,0 +1,2140 @@
+/* ──────────────────────────────────────────────
+   Admin UI components (docs/ui.md §6–7)
+
+   Every rule sits under #mcpmate-root, which also holds the portal
+   container, so overlays get them too. Values come from the --el-* tokens
+   (config/tokens.ts, written by the Tailwind plugin). Breakpoints repeat
+   tokens.breakpoints: sm 600, md 782, lg 960.
+
+   [data-el-state="hover" | "focus"] forces a state for the UI kit page.
+   ────────────────────────────────────────────── */
+
+/* Rules are grouped by component, so selectors of unrelated components
+   compare out of order; the order that matters is kept within each group. */
+/* stylelint-disable no-descending-specificity */
+
+#mcpmate-root {
+  /* WordPress's admin bar height (46 px below 783 px). */
+  /* stylelint-disable-next-line custom-property-pattern -- WordPress's own property. */
+  --el-admin-bar: var(--wp-admin--admin-bar--height, 32px);
+}
+
+/* ── Focus ─────────────────────────────────── */
+
+#mcpmate-root :focus-visible,
+#mcpmate-root [data-el-state="focus"]:not(.ant-checkbox-wrapper, .ant-select) {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+#mcpmate-root a:focus {
+  box-shadow: none;
+}
+
+/* A date input's calendar button sits in its shadow DOM: while it has
+   focus, the input matches :focus-within only. */
+#mcpmate-root input[type="date"]:focus-within {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+}
+
+/* Programmatic focus targets (page title, main, dialog title, caption). */
+#mcpmate-root [tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* antd draws focus on a sibling or wrapper of the real control. */
+#mcpmate-root .ant-checkbox-input:focus-visible + .ant-checkbox-inner,
+#mcpmate-root .ant-checkbox-wrapper[data-el-state="focus"] .ant-checkbox-inner,
+#mcpmate-root .ant-select:has(input:focus-visible) .ant-select-selector,
+#mcpmate-root .ant-select[data-el-state="focus"] .ant-select-selector,
+#mcpmate-root .el-segment:has(.el-segment-input:focus-visible) {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Hover on antd controls, also forced. */
+#mcpmate-root
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+  .ant-checkbox-inner,
+#mcpmate-root .ant-checkbox-wrapper[data-el-state="hover"] .ant-checkbox-inner,
+#mcpmate-root .ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+#mcpmate-root .ant-select[data-el-state="hover"] .ant-select-selector,
+#mcpmate-root .el-input:hover,
+#mcpmate-root .el-input[data-el-state="hover"] {
+  border-color: var(--el-brand);
+}
+
+#mcpmate-root .ant-table :focus-visible,
+#mcpmate-root .el-table-cards :focus-visible {
+  outline-offset: -2px;
+}
+
+/* ── Type in older antd pages ──────────────── */
+
+#mcpmate-root h1.ant-typography {
+  font-size: var(--el-text-xl);
+  line-height: var(--el-text-xl-leading);
+}
+
+#mcpmate-root h2.ant-typography {
+  font-size: var(--el-text-lg);
+  line-height: var(--el-text-lg-leading);
+}
+
+#mcpmate-root h3.ant-typography {
+  font-size: var(--el-text-md);
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-mono {
+  font-family: var(--el-font-mono);
+  font-size: var(--el-text-mono);
+  line-height: var(--el-text-mono-leading);
+}
+
+/* ── Shell ─────────────────────────────────── */
+
+#mcpmate-root .el-app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--el-admin-bar));
+  background: var(--el-bg-page);
+}
+
+#mcpmate-root .el-skip-link {
+  position: absolute;
+  inset-inline-start: 16px;
+  top: -200px;
+  z-index: 30;
+  padding: 8px 16px;
+  border: 2px solid var(--el-brand);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-skip-link:focus {
+  top: 8px;
+}
+
+#mcpmate-root .el-topbar {
+  position: sticky;
+  top: var(--el-admin-bar);
+  z-index: 20;
+  border-block-end: 1px solid var(--el-border);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-topbar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 24px;
+  max-width: var(--el-max-width);
+  min-height: 56px;
+  margin-inline: auto;
+  padding: 4px 24px;
+}
+
+#mcpmate-root .el-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--el-brand);
+  font-size: var(--el-text-md);
+  font-weight: 600;
+  line-height: var(--el-text-md-leading);
+  text-decoration: none;
+}
+
+#mcpmate-root .el-brand-name {
+  color: var(--el-text);
+}
+
+#mcpmate-root .el-logo {
+  flex: none;
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+#mcpmate-root .el-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-nav li {
+  margin: 0;
+}
+
+#mcpmate-root .el-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 4px 12px;
+  border-block-end: 3px solid transparent;
+  color: var(--el-text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+#mcpmate-root .el-nav-link:hover {
+  color: var(--el-text);
+  text-decoration: none;
+}
+
+#mcpmate-root .el-nav-link[aria-current="page"] {
+  border-block-end-color: var(--el-brand);
+  color: var(--el-brand);
+  font-weight: 700;
+}
+
+#mcpmate-root .el-topbar-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-inline-start: auto;
+}
+
+#mcpmate-root .el-version {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+/* 600–959 px: the navigation drops to a second row. */
+#mcpmate-root .el-topbar.is-medium .el-nav {
+  flex-basis: 100%;
+  order: 3;
+}
+
+/* Below 600 px: name and Menu, then the pill, then the open menu. */
+#mcpmate-root .el-topbar.is-narrow .el-topbar-inner {
+  padding: 8px 16px;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-menu-button {
+  margin-inline-start: auto;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-topbar-meta {
+  flex-basis: 100%;
+  order: 2;
+  margin-inline-start: 0;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-nav {
+  flex-basis: 100%;
+  order: 3;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-nav ul {
+  flex-direction: column;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-nav-link {
+  display: flex;
+  min-height: 44px;
+  border-block-end: 0;
+  border-inline-start: 3px solid transparent;
+}
+
+#mcpmate-root .el-topbar.is-narrow .el-nav-link[aria-current="page"] {
+  border-inline-start-color: var(--el-brand);
+}
+
+#mcpmate-root .el-main {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  max-width: var(--el-max-width);
+  margin-inline: auto;
+  padding: 24px 24px 48px;
+}
+
+#mcpmate-root .el-shell-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-block-end: 24px;
+}
+
+#mcpmate-root .el-footer {
+  border-block-start: 1px solid var(--el-border);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  max-width: var(--el-max-width);
+  margin: 0 auto;
+  padding: 16px 24px;
+  list-style: none;
+}
+
+#mcpmate-root .el-footer-links li {
+  margin: 0;
+}
+
+#mcpmate-root .el-external-icon {
+  margin-inline-start: 4px;
+  font-size: 0.75em;
+}
+
+#mcpmate-root .el-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-block-end: 24px;
+}
+
+#mcpmate-root .el-page-title {
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-xl);
+  font-weight: 600;
+  line-height: var(--el-text-xl-leading);
+}
+
+#mcpmate-root .el-page-intro {
+  max-width: 60em;
+  margin: 4px 0 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+[dir="rtl"] #mcpmate-root .el-flip {
+  transform: scaleX(-1);
+}
+
+/* ── Button ────────────────────────────────── */
+
+#mcpmate-root .el-btn {
+  height: auto;
+  min-height: 36px;
+  padding: 6px 16px;
+  border-radius: var(--el-radius);
+  box-shadow: none;
+  font-weight: 500;
+  white-space: normal;
+}
+
+#mcpmate-root .el-btn-sm {
+  min-height: 32px;
+  padding: 4px 12px;
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-btn-icon {
+  width: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+}
+
+#mcpmate-root .el-btn.is-loading {
+  cursor: progress;
+}
+
+#mcpmate-root .el-btn-primary {
+  border: 1px solid var(--el-brand);
+  background: var(--el-brand);
+  color: #fff;
+}
+
+#mcpmate-root .el-btn-primary:not(:disabled):hover,
+#mcpmate-root .el-btn-primary[data-el-state="hover"] {
+  border-color: var(--el-brand-hover);
+  background: var(--el-brand-hover);
+  color: #fff;
+}
+
+#mcpmate-root .el-btn-secondary {
+  border: 1px solid var(--el-border-strong);
+  background: var(--el-bg-surface);
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-btn-secondary:not(:disabled):hover,
+#mcpmate-root .el-btn-secondary[data-el-state="hover"] {
+  border-color: var(--el-brand);
+  background: var(--el-bg-brand-tint);
+  color: var(--el-brand-hover);
+}
+
+#mcpmate-root .el-btn-danger {
+  border: 1px solid var(--el-danger);
+  background: var(--el-danger);
+  color: #fff;
+}
+
+#mcpmate-root .el-btn-danger:not(:disabled):hover,
+#mcpmate-root .el-btn-danger[data-el-state="hover"] {
+  border-color: var(--el-danger-hover);
+  background: var(--el-danger-hover);
+  color: #fff;
+}
+
+#mcpmate-root .el-btn-danger-secondary {
+  border: 1px solid var(--el-danger);
+  background: var(--el-bg-surface);
+  color: var(--el-danger);
+}
+
+#mcpmate-root .el-btn-danger-secondary:not(:disabled):hover,
+#mcpmate-root .el-btn-danger-secondary[data-el-state="hover"] {
+  border-color: var(--el-danger-hover);
+  background: var(--el-danger-bg);
+  color: var(--el-danger-hover);
+}
+
+#mcpmate-root .el-btn-link {
+  min-height: 24px;
+  padding-inline: 0;
+  border: 0;
+  background: transparent;
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-btn-link.el-btn-icon {
+  min-height: 32px;
+}
+
+#mcpmate-root .el-btn-link:not(:disabled):hover,
+#mcpmate-root .el-btn-link[data-el-state="hover"] {
+  background: transparent;
+  color: var(--el-brand-hover);
+  text-decoration: underline;
+}
+
+#mcpmate-root .el-btn:disabled,
+#mcpmate-root .el-btn.ant-btn-disabled {
+  border-color: var(--el-border);
+  background: var(--el-bg-subtle);
+  color: var(--el-text-disabled);
+  cursor: not-allowed;
+}
+
+#mcpmate-root .el-btn-link:disabled {
+  background: transparent;
+}
+
+/* ── Status: dot, pill, text ───────────────── */
+
+#mcpmate-root .el-tone-success {
+  --el-dot: var(--el-success-dot);
+}
+
+#mcpmate-root .el-tone-warning {
+  --el-dot: var(--el-warning-dot);
+}
+
+#mcpmate-root .el-tone-danger {
+  --el-dot: var(--el-danger-dot);
+}
+
+#mcpmate-root .el-tone-neutral {
+  --el-dot: var(--el-neutral-dot);
+}
+
+#mcpmate-root .el-dot {
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--el-radius-full);
+  background: var(--el-dot);
+}
+
+#mcpmate-root .el-dot-hollow {
+  border: 2px solid var(--el-dot);
+  background: transparent;
+}
+
+#mcpmate-root .el-dot-pause {
+  flex: none;
+  color: var(--el-dot);
+}
+
+#mcpmate-root .el-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: var(--el-radius-full);
+  font-size: var(--el-text-sm);
+  font-weight: 500;
+  line-height: var(--el-text-sm-leading);
+  text-decoration: none;
+}
+
+#mcpmate-root .el-pill-success {
+  background: var(--el-success-bg);
+  color: var(--el-success-text);
+}
+
+#mcpmate-root .el-pill-warning {
+  background: var(--el-warning-bg);
+  color: var(--el-warning-text);
+}
+
+#mcpmate-root .el-pill-danger {
+  background: var(--el-danger-bg);
+  color: var(--el-danger-text);
+}
+
+#mcpmate-root .el-pill-neutral {
+  background: var(--el-neutral-bg);
+  color: var(--el-neutral-text);
+}
+
+#mcpmate-root .el-pill-link:hover,
+#mcpmate-root .el-pill-link[data-el-state="hover"] {
+  text-decoration: underline;
+}
+
+#mcpmate-root .el-pill-success.el-pill-link:hover {
+  color: var(--el-success-text);
+}
+
+#mcpmate-root .el-pill-warning.el-pill-link:hover {
+  color: var(--el-warning-text);
+}
+
+#mcpmate-root .el-pill-danger.el-pill-link:hover {
+  color: var(--el-danger-text);
+}
+
+#mcpmate-root .el-pill-neutral.el-pill-link:hover {
+  color: var(--el-neutral-text);
+}
+
+#mcpmate-root .el-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Badge ─────────────────────────────────── */
+
+#mcpmate-root .el-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: var(--el-radius-sm);
+  font-size: var(--el-text-sm);
+  font-weight: 500;
+  line-height: var(--el-text-sm-leading);
+  white-space: nowrap;
+}
+
+#mcpmate-root .el-badge-read {
+  background: var(--el-info-bg);
+  color: var(--el-info-text);
+}
+
+#mcpmate-root .el-badge-write {
+  background: var(--el-warning-bg);
+  color: var(--el-warning-text);
+}
+
+#mcpmate-root .el-badge-approval,
+#mcpmate-root .el-badge-neutral {
+  background: var(--el-neutral-bg);
+  color: var(--el-neutral-text);
+}
+
+#mcpmate-root .el-badge-unavailable {
+  border-color: var(--el-border);
+  background: transparent;
+  color: var(--el-text-disabled);
+}
+
+/* ── Card, stat tile ───────────────────────── */
+
+#mcpmate-root .el-card {
+  padding: 24px;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-block-end: 16px;
+}
+
+#mcpmate-root .el-card-title,
+#mcpmate-root .el-stat-label {
+  margin: 0;
+  color: var(--el-text-label);
+  font-size: var(--el-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: var(--el-text-xs-leading);
+  text-transform: uppercase;
+}
+
+#mcpmate-root .el-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#mcpmate-root .el-stat,
+#mcpmate-root .el-stat dd {
+  margin: 0;
+}
+
+#mcpmate-root .el-stat-value {
+  margin-block: 4px;
+  color: var(--el-text);
+  font-size: var(--el-text-2xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: var(--el-text-2xl-leading);
+}
+
+#mcpmate-root .el-stat-meta {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-stat-error {
+  color: var(--el-danger-text);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-stat-link {
+  margin-block-start: 8px;
+}
+
+/* ── Skeleton ──────────────────────────────── */
+
+@keyframes el-shimmer {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+#mcpmate-root .el-skeleton {
+  display: block;
+}
+
+#mcpmate-root .el-skeleton-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#mcpmate-root .el-skeleton-block {
+  display: block;
+  height: 0.875rem;
+  border-radius: var(--el-radius-sm);
+  background: var(--el-skeleton);
+  animation: el-shimmer 1.4s ease-in-out infinite;
+}
+
+#mcpmate-root .el-skeleton-text:last-child:not(:first-child) {
+  width: 60%;
+}
+
+#mcpmate-root .el-skeleton-number {
+  width: 4rem;
+  height: 2rem;
+}
+
+#mcpmate-root .el-skeleton-shape-row .el-skeleton-blocks {
+  flex-direction: row;
+}
+
+#mcpmate-root .el-skeleton-row {
+  flex: 1;
+}
+
+/* ── Notice ────────────────────────────────── */
+
+#mcpmate-root .el-notice {
+  --el-notice-accent: var(--el-info-text);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--el-border);
+  border-inline-start: 4px solid var(--el-notice-accent);
+  border-radius: var(--el-radius);
+  background: var(--el-info-bg);
+  color: var(--el-text);
+}
+
+#mcpmate-root .el-notice-success {
+  --el-notice-accent: var(--el-success-text);
+
+  background: var(--el-success-bg);
+}
+
+#mcpmate-root .el-notice-warning {
+  --el-notice-accent: var(--el-warning-text);
+
+  background: var(--el-warning-bg);
+}
+
+#mcpmate-root .el-notice-danger {
+  --el-notice-accent: var(--el-danger-text);
+
+  background: var(--el-danger-bg);
+}
+
+#mcpmate-root .el-notice-icon {
+  color: var(--el-notice-accent);
+  font-size: 16px;
+  line-height: var(--el-text-base-leading);
+}
+
+#mcpmate-root .el-notice-content {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+#mcpmate-root .el-notice-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+#mcpmate-root .el-notice-body {
+  margin-block-start: 4px;
+}
+
+#mcpmate-root .el-notice-body p {
+  margin: 0;
+}
+
+#mcpmate-root .el-notice-action {
+  flex: none;
+}
+
+/* ── Empty state ───────────────────────────── */
+
+#mcpmate-root .el-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+#mcpmate-root .el-empty-icon {
+  color: var(--el-text-secondary);
+  font-size: 24px;
+}
+
+#mcpmate-root .el-empty-title {
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-md);
+  font-weight: 600;
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-empty-body {
+  max-width: 36em;
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-empty-action {
+  margin-block-start: 8px;
+}
+
+/* ── Fields ────────────────────────────────── */
+
+#mcpmate-root .el-field-label {
+  display: block;
+  margin-block-end: 4px;
+  color: var(--el-text);
+  font-weight: 500;
+}
+
+#mcpmate-root .el-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--el-border-strong);
+  border-radius: var(--el-radius-sm);
+  background-color: var(--el-bg-surface);
+  box-shadow: none;
+  color: var(--el-text);
+  font: inherit;
+  line-height: var(--el-text-base-leading);
+}
+
+#mcpmate-root .el-input.el-mono {
+  font-family: var(--el-font-mono);
+  font-size: var(--el-text-mono);
+}
+
+#mcpmate-root textarea.el-input {
+  overflow-wrap: anywhere;
+  resize: vertical;
+}
+
+#mcpmate-root .el-native-select {
+  max-width: none;
+  padding-inline-end: 32px;
+}
+
+#mcpmate-root .el-filter .ant-input {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-color: var(--el-border-strong);
+  border-radius: var(--el-radius-sm);
+  box-shadow: none;
+  line-height: var(--el-text-base-leading);
+}
+
+#mcpmate-root .el-copy-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+#mcpmate-root .el-copy-row > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+#mcpmate-root .el-copy-row.is-narrow {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── Toggle (antd Switch) ──────────────────── */
+
+#mcpmate-root .el-toggle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 8px;
+}
+
+#mcpmate-root .el-toggle-text {
+  flex: 1;
+  min-width: 0;
+}
+
+#mcpmate-root .el-toggle-label {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#mcpmate-root .el-toggle-description {
+  margin: 2px 0 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-toggle-control {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
+#mcpmate-root .el-toggle-state {
+  min-width: 2em;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .ant-switch {
+  background: var(--el-border-strong);
+}
+
+#mcpmate-root .ant-switch:not(.ant-switch-disabled):hover,
+#mcpmate-root .ant-switch[data-el-state="hover"] {
+  background: var(--el-text-secondary);
+}
+
+#mcpmate-root .ant-switch.ant-switch-checked {
+  background: var(--el-brand);
+}
+
+#mcpmate-root .ant-switch.ant-switch-checked:not(.ant-switch-disabled):hover,
+#mcpmate-root .ant-switch.ant-switch-checked[data-el-state="hover"] {
+  background: var(--el-brand-hover);
+}
+
+/* ── Disclosure, checkbox group ────────────── */
+
+#mcpmate-root .el-disclosure {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--el-radius-sm);
+  background: transparent;
+  color: var(--el-brand);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#mcpmate-root .el-disclosure:hover,
+#mcpmate-root .el-disclosure[data-el-state="hover"] {
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-disclosure-icon {
+  font-size: 0.75em;
+  transition: transform var(--el-duration-fast) ease-out;
+}
+
+#mcpmate-root .el-disclosure[aria-expanded="true"] .el-disclosure-icon {
+  transform: rotate(180deg);
+}
+
+#mcpmate-root .el-checkbox-group {
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-checkbox-group-legend {
+  float: inline-start;
+  margin-inline-end: 16px;
+  padding: 4px 0;
+}
+
+#mcpmate-root .el-checkbox-group-name {
+  font-weight: 600;
+}
+
+#mcpmate-root .el-checkbox-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px 16px;
+  min-height: 32px;
+}
+
+#mcpmate-root .el-checkbox-group-counts {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-checkbox-group-items {
+  clear: both;
+  padding-block-start: 8px;
+  padding-inline-start: 24px;
+}
+
+#mcpmate-root .el-checkbox-group-items[hidden] {
+  display: none;
+}
+
+#mcpmate-root .el-checkbox-group-items ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-checkbox-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+  padding-block: 4px;
+}
+
+#mcpmate-root .el-checkbox-item-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+#mcpmate-root .el-checkbox-item-note {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-checkbox-group-option {
+  margin-block-start: 8px;
+}
+
+#mcpmate-root .el-checkbox-item-description {
+  flex-basis: 100%;
+  margin: 0;
+  padding-inline-start: 24px;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+/* ── Segmented control ─────────────────────── */
+
+#mcpmate-root .el-segmented-field {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+#mcpmate-root .el-segmented-label {
+  font-weight: 500;
+}
+
+#mcpmate-root .el-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--el-border-strong);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: var(--el-radius-sm);
+  color: var(--el-text);
+  cursor: pointer;
+}
+
+#mcpmate-root .el-segment:hover,
+#mcpmate-root .el-segment[data-el-state="hover"] {
+  background: var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-segment.is-checked {
+  background: var(--el-bg-brand-tint);
+  box-shadow: inset 0 0 0 1px var(--el-brand);
+  color: var(--el-brand);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-segment-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ── Tabs ──────────────────────────────────── */
+
+#mcpmate-root .el-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-block: 16px;
+  border-block-end: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-block-end: -1px;
+  padding: 4px 12px;
+  border-block-end: 3px solid transparent;
+  color: var(--el-text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+#mcpmate-root .el-tab:hover,
+#mcpmate-root .el-tab[data-el-state="hover"] {
+  color: var(--el-text);
+  text-decoration: none;
+}
+
+#mcpmate-root .el-tab.is-active {
+  border-block-end-color: var(--el-brand);
+  color: var(--el-brand);
+  font-weight: 700;
+}
+
+#mcpmate-root .el-tab-count {
+  padding: 0 6px;
+  border-radius: var(--el-radius-full);
+  background: var(--el-neutral-bg);
+  color: var(--el-neutral-text);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-tabpanel {
+  border-radius: var(--el-radius-sm);
+}
+
+/* ── Modal, drawer ─────────────────────────── */
+
+#mcpmate-root .el-dialog-title {
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-md);
+  font-weight: 600;
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-modal .ant-modal {
+  top: calc(var(--el-admin-bar) + 48px);
+  max-width: calc(100vw - 32px);
+}
+
+#mcpmate-root .el-modal .ant-modal-content {
+  padding: 24px;
+  border-radius: var(--el-radius-lg);
+  box-shadow: var(--el-shadow-overlay);
+}
+
+#mcpmate-root .el-dialog-body > p {
+  margin: 0 0 12px;
+}
+
+#mcpmate-root .el-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+#mcpmate-root .el-drawer .ant-drawer-content-wrapper {
+  top: var(--el-admin-bar);
+  box-shadow: var(--el-shadow-overlay);
+}
+
+#mcpmate-root .el-drawer .ant-drawer-header {
+  padding: 16px 24px;
+  border-color: var(--el-border);
+}
+
+@media (width < 600px) {
+  #mcpmate-root .el-modal .ant-modal-wrap {
+    padding-block-start: var(--el-admin-bar);
+  }
+
+  #mcpmate-root .el-modal .ant-modal {
+    top: 0;
+    width: 100vw !important;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+  }
+
+  #mcpmate-root .el-modal .ant-modal-content {
+    min-height: calc(100vh - var(--el-admin-bar));
+    border-radius: 0;
+  }
+
+  #mcpmate-root .el-drawer .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+}
+
+/* ── Filter bar, pagination ────────────────── */
+
+#mcpmate-root .el-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-block: 16px;
+}
+
+#mcpmate-root .el-filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+}
+
+#mcpmate-root .el-filter-controls[hidden] {
+  display: none;
+}
+
+#mcpmate-root .el-filter {
+  flex: 1 1 10rem;
+  min-width: 0;
+  max-width: 18rem;
+}
+
+#mcpmate-root .el-filter-bar.is-narrow .el-filter {
+  flex-basis: 100%;
+  max-width: none;
+}
+
+#mcpmate-root .el-filter-toggle {
+  align-self: flex-start;
+}
+
+#mcpmate-root .el-select {
+  width: 100%;
+}
+
+#mcpmate-root .el-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-block-start: 16px;
+}
+
+#mcpmate-root .el-pagination-range {
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-pagination-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-pagination-list li {
+  margin: 0;
+}
+
+#mcpmate-root .el-page {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--el-radius-sm);
+  background: transparent;
+  color: var(--el-brand);
+  font: inherit;
+  cursor: pointer;
+}
+
+#mcpmate-root .el-page:hover,
+#mcpmate-root .el-page[data-el-state="hover"] {
+  border-color: var(--el-brand);
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-page.is-current {
+  border-color: var(--el-brand);
+  background: var(--el-brand);
+  color: #fff;
+  font-weight: 600;
+}
+
+#mcpmate-root .el-pagination-gap,
+#mcpmate-root .el-pagination-position {
+  padding: 0 8px;
+  color: var(--el-text-secondary);
+}
+
+/* ── Table ─────────────────────────────────── */
+
+#mcpmate-root .el-table .ant-table {
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-table .ant-table-caption,
+#mcpmate-root .el-table-caption {
+  margin: 0;
+  padding: 0 0 8px;
+  color: var(--el-text);
+  font-weight: 600;
+  text-align: start;
+  caption-side: top;
+}
+
+#mcpmate-root .el-table .ant-table-thead > tr > th {
+  background: var(--el-bg-subtle);
+  color: var(--el-text);
+  font-size: var(--el-text-sm);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-table .ant-table-thead > tr > th,
+#mcpmate-root .el-table .ant-table-tbody > tr > td,
+#mcpmate-root .el-table .ant-table-tbody > tr > th {
+  padding: 12px 16px;
+  border-color: var(--el-border);
+}
+
+#mcpmate-root .el-table .ant-table-tbody > tr > th {
+  font-weight: 600;
+  text-align: start;
+}
+
+#mcpmate-root .el-sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#mcpmate-root .el-sort-icon::after {
+  content: "↕";
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-sort-icon.is-ascending::after {
+  content: "↑";
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-sort-icon.is-descending::after {
+  content: "↓";
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-table-sort {
+  max-width: 20rem;
+  margin-block-end: 12px;
+}
+
+#mcpmate-root .el-table-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-table-card {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-table-card-title {
+  margin: 0 0 8px;
+  color: var(--el-text);
+  font-size: var(--el-text-base);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-table-card dl {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+#mcpmate-root .el-table-card-row {
+  display: grid;
+  grid-template-columns: minmax(6rem, 35%) 1fr;
+  gap: 8px;
+}
+
+#mcpmate-root .el-table-card-row dt {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-table-card-row dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── JSON, diff ────────────────────────────── */
+
+#mcpmate-root .el-json {
+  max-height: 20rem;
+  margin: 0;
+  padding: 12px 16px;
+  overflow: auto;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-subtle);
+  color: var(--el-text);
+  font-family: var(--el-font-mono);
+  font-size: var(--el-text-mono);
+  line-height: var(--el-text-mono-leading);
+  white-space: pre;
+}
+
+#mcpmate-root .el-diff-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-block-end: 12px;
+}
+
+#mcpmate-root .el-diff-summary,
+#mcpmate-root .el-diff-note {
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-diff-note {
+  margin-block-start: 4px;
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-diff-fields {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+#mcpmate-root .el-diff-field dt {
+  margin-block-end: 4px;
+  font-weight: 600;
+}
+
+#mcpmate-root .el-diff-field dd {
+  margin: 0;
+}
+
+#mcpmate-root .el-diff-unchanged {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-diff-lines {
+  max-height: 24rem;
+  overflow: auto;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+  font-family: var(--el-font-mono);
+  font-size: var(--el-text-mono);
+  line-height: var(--el-text-mono-leading);
+}
+
+#mcpmate-root .el-diff-run {
+  display: block;
+}
+
+#mcpmate-root .el-diff-run[hidden] {
+  display: none;
+}
+
+#mcpmate-root .el-diff-line {
+  display: block;
+  padding-inline: 8px;
+  color: var(--el-text);
+  text-decoration: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-diff-line.is-add {
+  background: var(--el-diff-add-bg);
+  color: var(--el-diff-add-text);
+}
+
+#mcpmate-root .el-diff-line.is-remove {
+  background: var(--el-diff-del-bg);
+  color: var(--el-diff-del-text);
+}
+
+#mcpmate-root .el-diff-sign {
+  display: inline-block;
+  width: 1.5em;
+  user-select: none;
+}
+
+#mcpmate-root .el-diff-collapsed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: var(--el-bg-subtle);
+  color: var(--el-text-secondary);
+  font-family: var(--el-font-sans);
+}
+
+#mcpmate-root .el-diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#mcpmate-root .el-diff-table th {
+  padding: 4px 8px;
+  background: var(--el-bg-subtle);
+  font-family: var(--el-font-sans);
+  font-weight: 600;
+  text-align: start;
+}
+
+#mcpmate-root .el-diff-table td {
+  padding: 0;
+  border-inline-start: 1px solid var(--el-border);
+  vertical-align: top;
+}
+
+/* ── Settings rows ─────────────────────────── */
+
+#mcpmate-root .el-setting-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 12px;
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-setting-row:first-of-type {
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
+#mcpmate-root .el-setting-text {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+#mcpmate-root .el-setting-label {
+  margin: 0;
+  font-weight: 600;
+}
+
+#mcpmate-root .el-setting-hint {
+  margin: 2px 0 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-always-on {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--el-text-secondary);
+  font-weight: 500;
+}
+
+/* ── Settings page ─────────────────────────── */
+
+#mcpmate-root .el-settings.is-wide {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+#mcpmate-root .el-settings-nav {
+  position: sticky;
+  inset-block-start: calc(var(--el-admin-bar) + 72px);
+}
+
+#mcpmate-root .el-settings-nav-title {
+  margin: 0 0 8px;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#mcpmate-root .el-settings-nav ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-settings-nav a {
+  display: inline-block;
+  padding-block: 4px;
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-settings-nav a[aria-current] {
+  font-weight: 600;
+}
+
+#mcpmate-root .el-card-title[tabindex="-1"]:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+}
+
+#mcpmate-root .el-setting-control {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  max-width: 100%;
+}
+
+/* As wide as its choices, also when an error under it is wider. */
+#mcpmate-root .el-setting-control > .el-native-select {
+  width: auto;
+  max-width: 100%;
+}
+
+#mcpmate-root .el-setting-row > .el-toggle,
+#mcpmate-root .el-setting-row > .el-checkbox-group {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+#mcpmate-root .el-setting-nested {
+  padding-inline-start: 24px;
+}
+
+#mcpmate-root .el-setting-stack {
+  display: grid;
+  justify-content: stretch;
+  gap: 8px;
+}
+
+#mcpmate-root .el-setting-value {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-setting-inline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px 12px;
+}
+
+#mcpmate-root .el-field-error {
+  margin: 4px 0 0;
+  color: var(--el-danger-text);
+  font-size: var(--el-text-sm);
+  font-weight: 500;
+}
+
+#mcpmate-root .el-native-select[aria-invalid="true"] {
+  border-color: var(--el-danger);
+}
+
+#mcpmate-root .el-save-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-block-start: 16px;
+  padding-block-start: 16px;
+  border-block-start: 1px solid var(--el-border);
+  background: var(--el-bg-surface);
+}
+
+/* While something is unsaved the bar stays in view at the bottom of the window. */
+#mcpmate-root .el-save-bar.is-dirty {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 2;
+  margin-inline: -24px;
+  padding: 12px 24px;
+  border-block-start-color: var(--el-border-strong);
+}
+
+#mcpmate-root .el-save-bar-status {
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-save-bar.is-dirty .el-save-bar-status {
+  color: var(--el-text);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-save-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── Activity: audit log, change history ───── */
+
+#mcpmate-root .el-activity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Grid items size to their content by default: then the filter bar and the
+   table would never see a narrow container and never fold. */
+#mcpmate-root .el-activity > * {
+  min-width: 0;
+}
+
+/* Links inside running text are underlined, not told apart by colour alone. */
+#mcpmate-root .el-purge-line a,
+#mcpmate-root .el-drawer-line a,
+#mcpmate-root .el-drawer-links a,
+#mcpmate-root .el-details a,
+#mcpmate-root .el-row-actions a {
+  text-decoration: underline;
+}
+
+#mcpmate-root .el-list-count,
+#mcpmate-root .el-filter-scope {
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-audit-args {
+  display: inline-block;
+  max-width: 24ch;
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-action-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+#mcpmate-root .el-row-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+#mcpmate-root .el-purge {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+#mcpmate-root .el-purge-line {
+  margin: 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-drawer-meta {
+  margin: 0 0 16px;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-drawer-heading {
+  margin: 24px 0 8px;
+  font-size: var(--el-text-md);
+}
+
+#mcpmate-root .el-drawer-line {
+  margin: 16px 0 0;
+}
+
+#mcpmate-root .el-drawer-links {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-details {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+#mcpmate-root .el-details > div {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
+  gap: 4px 16px;
+}
+
+#mcpmate-root .el-details dt {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── Approval request ───────────────────────── */
+
+#mcpmate-root .el-approval {
+  max-width: 960px;
+}
+
+#mcpmate-root .el-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#mcpmate-root .el-approval-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+#mcpmate-root .el-approval-title {
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  line-height: var(--el-text-lg-leading);
+}
+
+#mcpmate-root .el-approval-actions {
+  justify-content: flex-start;
+}
+
+@media (width < 600px) {
+  #mcpmate-root .el-details > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #mcpmate-root .el-save-bar.is-dirty {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+}
+
+/* The before-and-after drawer is full screen below 960 px. */
+@media (width < 960px) {
+  #mcpmate-root .el-drawer-lg .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+}
+
+/* ── Tools page ────────────────────────────── */
+
+#mcpmate-root .el-tools-intro {
+  margin: 0 0 16px;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-tools-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 24px;
+  margin-block-end: 12px;
+}
+
+#mcpmate-root .el-tools-toolbar .el-filter-bar {
+  flex: 1 1 14rem;
+  margin-block: 0;
+}
+
+#mcpmate-root .el-tools-toolbar .el-toggle {
+  flex: 0 1 auto;
+}
+
+#mcpmate-root .el-tools-count {
+  margin: 0 0 12px;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+/* The save status sits over the list's bottom edge: keep focus clear of it. */
+#mcpmate-root .el-tools-list :focus {
+  scroll-margin-block-end: 96px;
+}
+
+#mcpmate-root .el-tools-unavailable {
+  color: var(--el-text-disabled);
+}
+
+#mcpmate-root .el-tools-unavailable-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+#mcpmate-root .el-tools-unavailable .el-checkbox-group-counts {
+  color: var(--el-text-disabled);
+}
+
+#mcpmate-root .el-tools-unavailable-body {
+  margin: 4px 0 0;
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-tools-save-status {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin-block-start: 16px;
+  padding-block: 8px;
+  background: var(--el-bg-page);
+}
+
+#mcpmate-root .el-tools-save-status .el-notice {
+  margin: 0;
+}
+
+#mcpmate-root .el-tools-save-text {
+  margin: 0;
+  padding: 8px 16px;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+  font-weight: 500;
+}
+
+#mcpmate-root .el-tools-saved-icon {
+  color: var(--el-success-text);
+}
+
+/* ── UI kit page (WP_DEBUG) ────────────────── */
+
+#mcpmate-root .el-kit-section {
+  margin-block-end: 32px;
+}
+
+#mcpmate-root .el-kit-title {
+  margin: 0 0 12px;
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  line-height: var(--el-text-lg-leading);
+}
+
+#mcpmate-root .el-kit-subtitle {
+  margin: 16px 0 8px;
+  font-size: var(--el-text-md);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-kit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 16px;
+}
+
+#mcpmate-root .el-kit-sample {
+  min-width: 0;
+  padding: 16px;
+  border: 1px dashed var(--el-border-strong);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-kit-sample:has(.el-table, .el-diff, .el-filter-bar) {
+  grid-column: 1 / -1;
+}
+
+#mcpmate-root .el-kit-state {
+  margin: 0 0 8px;
+  color: var(--el-text-label);
+  font-size: var(--el-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#mcpmate-root .el-kit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+#mcpmate-root .el-kit-swatches {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 8px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-kit-swatches li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+#mcpmate-root .el-kit-swatch {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--el-border-strong);
+  border-radius: var(--el-radius-sm);
+}
+
+#mcpmate-root .el-kit-hex,
+#mcpmate-root .el-kit-note {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-kit-list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-kit-p,
+#mcpmate-root .el-kit-note {
+  margin: 0 0 8px;
+}
+
+#mcpmate-root .el-kit-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 0;
+}
+
+#mcpmate-root .el-kit-dl dd {
+  margin: 0;
+}
+
+/* ── Narrow screens (sm, 600 px) ───────────── */
+
+@media (width < 600px) {
+  #mcpmate-root .el-topbar {
+    position: static;
+  }
+
+  #mcpmate-root .el-main,
+  #mcpmate-root .el-footer-links {
+    padding-inline: 16px;
+  }
+
+  #mcpmate-root .el-card {
+    padding: 16px;
+  }
+}
+
+/* ── Windows High Contrast ─────────────────── */
+
+@media (forced-colors: active) {
+  #mcpmate-root :focus-visible,
+  #mcpmate-root [data-el-state="focus"] {
+    outline-color: Highlight;
+  }
+
+  #mcpmate-root .el-card,
+  #mcpmate-root .el-notice,
+  #mcpmate-root .el-badge,
+  #mcpmate-root .el-pill,
+  #mcpmate-root .el-segmented,
+  #mcpmate-root .el-table-card,
+  #mcpmate-root .el-checkbox-group,
+  #mcpmate-root .el-tools-save-text {
+    border-color: CanvasText;
+  }
+
+  #mcpmate-root .el-dot {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  #mcpmate-root .el-dot-hollow {
+    border-color: CanvasText;
+    background: transparent;
+  }
+
+  #mcpmate-root .el-nav-link[aria-current="page"],
+  #mcpmate-root .el-tab.is-active {
+    border-color: Highlight;
+  }
+}
+
+/* ── Reduced motion ────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  #mcpmate-root *,
+  #mcpmate-root *::before,
+  #mcpmate-root *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}
+
+/* Tools → Integrations, Stock photos: the Unsplash key form. */
+#mcpmate-root .el-stock-photos {
+  margin-block-start: 12px;
+}
+
+#mcpmate-root .el-stock-photos-status {
+  margin: 0 0 8px;
+}
+
+#mcpmate-root .el-stock-photos-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+#mcpmate-root .el-stock-photos-fields > div {
+  flex: 1 1 14rem;
+  min-width: 0;
+}

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────
+   WordPress admin CSS reset for our plugin pages
+   ────────────────────────────────────────────── */
+
+#mcpmate-root {
+  color: var(--el-text);
+  font-family: var(--el-font-sans);
+  font-size: var(--el-text-base);
+  line-height: var(--el-text-base-leading);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent WordPress admin styles from leaking into Ant Design components */
+#mcpmate-root *,
+#mcpmate-root *::before,
+#mcpmate-root *::after {
+  box-sizing: border-box;
+}
+
+#mcpmate-root h1,
+#mcpmate-root h2,
+#mcpmate-root h3,
+#mcpmate-root h4,
+#mcpmate-root h5,
+#mcpmate-root h6 {
+  margin: 0;
+  padding: 0;
+}
+
+#mcpmate-root a {
+  text-decoration: none;
+}
+
+#mcpmate-root a:where(:not(.ant-btn)) {
+  color: var(--el-brand);
+}
+
+#mcpmate-root a:where(:not(.ant-btn)):hover {
+  color: var(--el-brand-hover);
+  text-decoration: underline;
+}
+
+/* The app fills the content area (docs/ui.md §3.4): the only rules outside
+   the root, scoped to this plugin's admin page. */
+/* stylelint-disable-next-line selector-class-pattern -- WordPress's body class for this page. */
+body.toplevel_page_mcpmate #wpcontent {
+  padding-inline-start: 0;
+}
+
+/* stylelint-disable-next-line selector-class-pattern -- WordPress's body class for this page. */
+body.toplevel_page_mcpmate #wpfooter {
+  display: none;
+}
+
+/* Setup wizard: nothing moves for users who ask for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  #mcpmate-root .mcpmate-setup .anticon-spin,
+  #mcpmate-root .mcpmate-setup .ant-spin-dot {
+    animation: none !important;
+  }
+}

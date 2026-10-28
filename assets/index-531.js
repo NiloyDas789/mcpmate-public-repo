@@ -1,0 +1,1 @@
+import{j as t,a as r,B as a}from"./main-pj8werpi.js";import{P as e}from"./pagehead-299.js";function m(){return t.jsxs(t.Fragment,{children:[t.jsx(e,{title:r("Page not found","mcpmate"),intro:r("This page doesn't exist.","mcpmate")}),t.jsx(a,{variant:"primary",href:"#/",children:r("Go to the Dashboard","mcpmate")})]})}export{m as default};

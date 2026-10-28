@@ -1,0 +1,1 @@
+import{j as n}from"./main-pj8werpi.js";function o({value:r,label:e}){return n.jsx("pre",{className:"el-json",tabIndex:0,role:"region","aria-label":e,dir:"ltr",children:JSON.stringify(r,null,2)})}export{o as J};
