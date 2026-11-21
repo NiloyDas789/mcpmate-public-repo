@@ -1,0 +1,10 @@
+.DS_Store
+.env
+node_modules/
+vendor/
+assets/
+build/
+coverage/
+test-results/
+.phpunit.result.cache
+*.log

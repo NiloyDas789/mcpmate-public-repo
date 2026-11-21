@@ -1,0 +1,198 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: a shelf of the site's own plugins, each opening what AI apps may do with it
+ * Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V3 · weakest: V, the tile is the familiar app-directory shape; kept it because people already know how to read it, and the logos, the real counts and the plugin headings make it this site's own
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · IntegrationGrid.tsx renders no disabled tile · a plugin that cannot run still opens, to say what it needs; nothing is ever disabled here */
+
+/* ── Tools → Integrations: the plugin tiles ─── */
+
+#mcpmate-root .el-plugin-shelf {
+  display: grid;
+  gap: var(--el-space-6);
+  margin-block-start: var(--el-space-4);
+}
+
+#mcpmate-root .el-plugin-category-title {
+  margin: 0 0 var(--el-space-2);
+  color: var(--el-text);
+  font-size: var(--el-text-md);
+  font-weight: 600;
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-plugin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  gap: var(--el-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-plugin-grid > li {
+  min-width: 0;
+  margin: 0;
+}
+
+#mcpmate-root .el-plugin-tile {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--el-space-1);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+  padding: var(--el-space-4);
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+  color: var(--el-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color var(--el-duration-fast) ease-out,
+    background-color var(--el-duration-fast) ease-out,
+    transform var(--el-duration-fast) ease-out;
+}
+
+#mcpmate-root .el-plugin-tile:hover {
+  border-color: var(--el-border-strong);
+}
+
+#mcpmate-root .el-plugin-tile:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+  transition: none;
+}
+
+#mcpmate-root .el-plugin-tile:active {
+  background: var(--el-bg-subtle);
+  transform: translateY(1px);
+}
+
+#mcpmate-root .el-plugin-tile-name {
+  min-width: 0;
+  max-width: 100%;
+  margin-block-start: var(--el-space-2);
+  font-size: var(--el-text-base);
+  font-weight: 600;
+  line-height: var(--el-text-base-leading);
+  overflow-wrap: break-word;
+}
+
+#mcpmate-root .el-plugin-tile-status {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+/* The logo on its square; an empty square is a slot for the logo file. */
+#mcpmate-root .el-plugin-logo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  border-radius: var(--el-radius);
+  background: var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-plugin-logo-md {
+  width: 48px;
+  height: 48px;
+}
+
+#mcpmate-root .el-plugin-logo-lg {
+  width: 64px;
+  height: 64px;
+}
+
+#mcpmate-root .el-plugin-logo img {
+  display: block;
+  width: 62.5%;
+  height: 62.5%;
+  object-fit: contain;
+}
+
+/* Not installed, not active, or needing a key: quieter, still openable. */
+#mcpmate-root .el-plugin-tile-off {
+  background: var(--el-bg-page);
+}
+
+#mcpmate-root .el-plugin-tile-off .el-plugin-tile-name {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-plugin-tile-off .el-plugin-logo img {
+  filter: grayscale(1);
+  opacity: 0.65;
+}
+
+#mcpmate-root .el-plugin-tile-loading {
+  cursor: default;
+}
+
+#mcpmate-root .el-plugin-tile-loading .el-skeleton {
+  width: 100%;
+  margin-block-start: var(--el-space-2);
+}
+
+/* ── A plugin's dialog ─────────────────────── */
+
+#mcpmate-root .el-plugin-dialog {
+  display: grid;
+  gap: var(--el-space-4);
+  min-width: 0;
+}
+
+#mcpmate-root .el-plugin-dialog-head {
+  display: flex;
+  align-items: center;
+  gap: var(--el-space-4);
+}
+
+#mcpmate-root .el-plugin-dialog-head > div {
+  min-width: 0;
+}
+
+#mcpmate-root .el-plugin-dialog-status {
+  margin: 0;
+  color: var(--el-text);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-plugin-dialog-lead {
+  margin: var(--el-space-1) 0 0;
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-plugin-dialog .el-notice {
+  margin: 0;
+}
+
+#mcpmate-root .el-plugin-dialog-narrowed {
+  margin: 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-plugin-dialog-groups .el-checkbox-group:last-child {
+  margin-block-end: 0;
+}
+
+/* The save status sits on the dialog's surface, not the page's. */
+#mcpmate-root .el-plugin-dialog .el-tools-save-status {
+  margin-block-start: 0;
+  background: var(--el-bg-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mcpmate-root .el-plugin-tile {
+    transition: none;
+  }
+
+  #mcpmate-root .el-plugin-tile:active {
+    transform: none;
+  }
+}

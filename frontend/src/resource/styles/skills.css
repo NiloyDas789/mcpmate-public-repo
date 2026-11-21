@@ -1,0 +1,240 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: the playbooks as a catalog in columns, each a mono name over what it does and the tools it needs, with a filter at its head, so 25 read-only playbooks fit in about a screen under the saved skills
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: E, the catalog cuts long descriptions at three lines; kept because the whole text opens with the name (and screen readers hear all of it), and length was the problem
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · SkillsPanel.tsx adds no control of its own · Edit, Restore, Delete permanently, the Saved and Trash switch, Filter playbooks and each playbook name are Button, SegmentedControl and FilterBar from components/ui, whose disabled and active states ui.css styles (.el-btn:disabled, .el-segment) */
+
+/* ── Tools → Skills ────────────────────────── */
+
+/* The tab's own width decides the layout (wp-admin's menu takes a share of the window). */
+#mcpmate-root .el-skills {
+  container-type: inline-size;
+}
+
+#mcpmate-root .el-skills-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-10);
+  min-width: 0;
+}
+
+#mcpmate-root .el-skills-saved,
+#mcpmate-root .el-skills-playbooks {
+  display: grid;
+  gap: var(--el-space-4);
+  align-content: start;
+  min-width: 0;
+}
+
+/* The heading and the Saved/Trash switch share one line. */
+#mcpmate-root .el-skills-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--el-space-3) var(--el-space-6);
+  min-width: 0;
+}
+
+#mcpmate-root .el-skills .el-section-title {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+/* A skill's name is an identifier (`brand-style`): mono, as AI apps call it. */
+#mcpmate-root .el-skill-name {
+  font-family: var(--el-font-mono);
+  font-size: var(--el-text-mono);
+  font-weight: 600;
+  line-height: var(--el-text-mono-leading);
+  overflow-wrap: anywhere;
+}
+
+/* Inside a table ui.css insets the ring (-2px); a link button has no inline
+   padding, so its ring would cross the name. Outside it, and instant. */
+#mcpmate-root .el-skills .el-btn-link:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+  transition: none;
+}
+
+/* ── Saved skills: the table ───────────────── */
+
+/* Captions are a quiet line, not a bold label (above the cards when narrow). */
+#mcpmate-root .el-skills .el-table-caption {
+  padding: 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 400;
+  line-height: var(--el-text-sm-leading);
+}
+
+/* Narrow: each card's title is the name and its line; the labels take what they need. */
+#mcpmate-root .el-skills .el-table-card-title {
+  font-weight: 400;
+}
+
+#mcpmate-root .el-skills .el-table-card-row {
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: var(--el-space-3);
+}
+
+/* Wide: the caption is the top line of the table's panel, not a label on its edge. */
+#mcpmate-root .el-skills .ant-table-caption {
+  padding: var(--el-space-3) var(--el-space-4);
+  border-block-end: 1px solid var(--el-border);
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 400;
+  line-height: var(--el-text-sm-leading);
+}
+
+/* The row header is the skill: on the table's own surface, not a grey stripe
+   (the playbooks too, when their column is wide enough to keep the table). */
+#mcpmate-root .el-skills-saved .ant-table-tbody > tr > th,
+#mcpmate-root .el-skills-playbooks .ant-table-tbody > tr > th {
+  background: var(--el-bg-surface);
+  font-weight: 400;
+}
+
+#mcpmate-root .el-skills-saved .ant-table-tbody > tr > th .el-setting-hint {
+  max-width: 60ch;
+}
+
+/* User, For, the date and Edit hug their content; the skill takes the rest. */
+#mcpmate-root
+  .el-skills-saved
+  .ant-table-thead
+  > tr
+  > th:where(:not(:first-child)),
+#mcpmate-root .el-skills-saved .ant-table-tbody > tr > td {
+  width: 1%;
+  white-space: nowrap;
+}
+
+/* Restore and Delete permanently side by side, each on one line. */
+#mcpmate-root .el-skills-saved .ant-table-tbody .el-row-actions {
+  flex-wrap: nowrap;
+  gap: var(--el-space-4);
+}
+
+#mcpmate-root .el-skills-saved .ant-table-tbody .el-row-actions .el-btn {
+  white-space: nowrap;
+}
+
+/* ── MCPMate playbooks: one line each ──────── */
+
+#mcpmate-root .el-skills-title {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+#mcpmate-root .el-skills-count,
+#mcpmate-root .el-skills-note {
+  margin: 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+  font-variant-numeric: tabular-nums;
+}
+
+#mcpmate-root .el-skills-playbooks .el-filter-bar {
+  flex: 0 1 20rem;
+  margin: 0;
+}
+
+/* The catalog: three columns wide, two, then one; each entry under a hairline,
+   so the columns read as rows. */
+#mcpmate-root .el-playbook-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--el-space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-playbook {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--el-space-1);
+  min-width: 0;
+  margin: 0;
+  padding: var(--el-space-3) 0 var(--el-space-4);
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-playbook .el-skill-name {
+  overflow-wrap: anywhere;
+}
+
+/* The whole text stays in the page (screen readers hear it, and it opens
+   with the name); on screen it is cut at three lines. */
+#mcpmate-root .el-playbook-what {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+#mcpmate-root .el-playbook-needs {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-xs);
+  line-height: var(--el-text-xs-leading);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+/* In the drawer the list of tools is shown whole. */
+#mcpmate-root .el-drawer .el-playbook-needs {
+  display: block;
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-playbook-needs-label {
+  font-weight: 600;
+}
+
+#mcpmate-root .el-playbook-needs .el-mono {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+@container (width >= 40rem) {
+  #mcpmate-root .el-playbook-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (width >= 64rem) {
+  #mcpmate-root .el-playbook-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* The drawer's read-only text: Copy at its top edge, at the inline end. */
+#mcpmate-root .el-skill-text {
+  display: grid;
+  gap: var(--el-space-2);
+  min-width: 0;
+}
+
+#mcpmate-root .el-skill-text-head {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,303 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: AI access as one full-width band, the site-wide state (Active, or Paused and tinted) beside the apps count and the one switch that stops every app, over the day's figures in a single strip and the recent calls as a ledger
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: V, a band over a strip over two columns is the familiar admin shape; kept because it is the order an admin asks in (can AI act here, how much did it, what exactly), and the weight now follows that order instead of six equal boxes
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · no control of its own: every Button, CopyField and disclosure is a components/ui control, and ui.css styles their :disabled and :active states (.el-btn:disabled, .el-btn:active) · repeating them here would fork the shared controls */
+
+/* Hallmark · reworded "Last 24 hours · %s" to "%s in the last 24 hours", "Last 24 hours · %s failed" to "%s failed in the last 24 hours" and "%1$s · %2$s" to "%1$s as %2$s" · 63 names middle-dot meta strings */
+
+/* ── Dashboard ─────────────────────────────── */
+
+#mcpmate-root .el-dashboard {
+  --el-dash-pad: var(--el-space-6);
+}
+
+/* Section titles are headings in sentence case, not the small tracked
+   capitals cards use elsewhere; the side cards take a step less. */
+#mcpmate-root .el-dashboard .el-card-title {
+  min-width: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: var(--el-text-lg-leading);
+  text-transform: none;
+  overflow-wrap: break-word;
+}
+
+#mcpmate-root .el-dashboard .el-dash-aside .el-card-title {
+  font-size: var(--el-text-md);
+  line-height: var(--el-text-md-leading);
+}
+
+/* Figure labels: the body face, a step smaller, sentence case. */
+#mcpmate-root .el-dashboard .el-stat-label {
+  color: var(--el-text-label);
+  font-size: var(--el-text-sm);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: var(--el-text-sm-leading);
+  text-transform: none;
+}
+
+/* Empty states sit where the content would start, not centred in a box. */
+#mcpmate-root .el-dashboard .el-empty {
+  align-items: flex-start;
+  padding: 0;
+  text-align: start;
+}
+
+#mcpmate-root .el-dashboard .el-empty-action {
+  margin-block-start: var(--el-space-1);
+}
+
+/* ── AI access: the band ───────────────────── */
+
+#mcpmate-root .el-dashboard .el-dash-access {
+  container-type: inline-size;
+  border-radius: var(--el-radius-lg);
+}
+
+#mcpmate-root .el-dashboard .el-dash-access.is-paused {
+  border-color: var(--el-warning-dot);
+  background: var(--el-warning-bg);
+}
+
+#mcpmate-root .el-dashboard .el-dash-access-state {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-1) var(--el-space-3);
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-md);
+  font-weight: 600;
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-dashboard .el-dash-access-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-4);
+}
+
+#mcpmate-root .el-dashboard .el-dash-access-apps {
+  display: grid;
+  gap: var(--el-space-1);
+  min-width: 0;
+}
+
+#mcpmate-root .el-dashboard .el-dash-access-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-3);
+}
+
+/* Paused with no apps left: the switch under the empty state. */
+#mcpmate-root .el-dashboard .el-empty + .el-dash-access-actions,
+#mcpmate-root .el-dashboard .el-dash-access-error {
+  margin-block-start: var(--el-space-4);
+}
+
+@container (width >= 36rem) {
+  #mcpmate-root .el-dashboard .el-dash-access-body {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--el-space-8);
+  }
+}
+
+/* ── The day's figures: one strip ──────────── */
+
+#mcpmate-root .el-dashboard .el-dash-figures {
+  padding: 0;
+  overflow: clip;
+  border-radius: var(--el-radius-lg);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figures-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figure {
+  min-width: 0;
+  padding: var(--el-space-5) var(--el-dash-pad);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figure + .el-dash-figure {
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figures-row.is-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#mcpmate-root .el-dashboard .is-row .el-dash-figure + .el-dash-figure {
+  border-block-start: 0;
+  border-inline-start: 1px solid var(--el-border);
+}
+
+/* In one column each figure is a row: its label and context on the start
+   side, the number at the end, so three figures take three short lines. */
+#mcpmate-root .el-dashboard .el-dash-figures-row:not(.is-row) .el-stat {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--el-space-4);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figures-row:not(.is-row) .el-stat > * {
+  grid-column: 1;
+}
+
+#mcpmate-root
+  .el-dashboard
+  .el-dash-figures-row:not(.is-row)
+  .el-stat
+  > .el-stat-value {
+  grid-row: 1 / span 4;
+  grid-column: 2;
+  align-self: center;
+  margin: 0;
+  font-size: var(--el-text-xl);
+  line-height: var(--el-text-xl-leading);
+}
+
+#mcpmate-root .el-dashboard .el-dash-figure-note {
+  margin: var(--el-space-2) 0 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+/* The week's changes run along the strip's foot, on the second neutral. */
+#mcpmate-root .el-dashboard .el-dash-week {
+  padding: var(--el-space-3) var(--el-dash-pad);
+  border-block-start: 1px solid var(--el-border);
+  background: var(--el-bg-subtle);
+}
+
+/* ── Recent calls and the side column ──────── */
+
+#mcpmate-root .el-dashboard .el-dash-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-4);
+  align-items: start;
+}
+
+#mcpmate-root .el-dashboard .el-dash-main.is-wide {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+#mcpmate-root .el-dashboard .el-dash-aside {
+  display: grid;
+  gap: var(--el-space-4);
+  min-width: 0;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-card {
+  container-type: inline-size;
+  padding-block-end: 0;
+  overflow: clip;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-card .el-card-head {
+  margin-block-end: var(--el-space-3);
+}
+
+/* Rows run edge to edge of the card, a hairline between each. */
+#mcpmate-root .el-dashboard .el-dash-ledger {
+  display: grid;
+  margin: 0 calc(var(--el-dash-pad) * -1);
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger > li {
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-row {
+  display: grid;
+  grid-template-areas:
+    "call time"
+    "status status";
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--el-space-1) var(--el-space-4);
+  align-items: baseline;
+  min-height: 2.75rem;
+  padding: var(--el-space-3) var(--el-dash-pad);
+  color: var(--el-text);
+  text-decoration: none;
+  transition: background-color var(--el-duration-fast) ease-out;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-row:hover {
+  background: var(--el-bg-subtle);
+  color: var(--el-text);
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-row:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: -2px;
+  transition: none;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-row:active {
+  background: var(--el-neutral-bg);
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-status {
+  grid-area: status;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-call {
+  display: grid;
+  grid-area: call;
+  gap: 2px;
+  min-width: 0;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-tool {
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-who,
+#mcpmate-root .el-dashboard .el-dash-ledger-time {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-dashboard .el-dash-ledger-time {
+  grid-area: time;
+  white-space: nowrap;
+}
+
+@container (width >= 34rem) {
+  #mcpmate-root .el-dashboard .el-dash-ledger-row {
+    grid-template-areas: "status call time";
+    grid-template-columns: 11rem minmax(0, 1fr) auto;
+  }
+}
+
+/* ── Narrow screens: the cards' own padding ── */
+
+@media (width < 600px) {
+  #mcpmate-root .el-dashboard {
+    --el-dash-pad: var(--el-space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mcpmate-root .el-dashboard .el-dash-ledger-row {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  #mcpmate-root .el-dashboard .el-dash-ledger-row:hover {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+}

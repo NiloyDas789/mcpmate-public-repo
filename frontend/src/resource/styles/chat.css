@@ -1,0 +1,189 @@
+/* Chat (MCPMate Pro, #/chat): conversations on the side, the transcript, the plan and the composer. */
+#mcpmate-root .el-chat {
+  display: grid;
+  gap: var(--el-space-6);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (width >= 1100px) {
+  #mcpmate-root .el-chat {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+}
+
+#mcpmate-root .el-chat-sessions {
+  display: grid;
+  align-content: start;
+  gap: var(--el-space-3);
+}
+
+#mcpmate-root .el-chat-session-list {
+  display: grid;
+  gap: var(--el-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-chat-session-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--el-space-2);
+  padding: var(--el-space-1) var(--el-space-2);
+  border-radius: var(--el-radius);
+}
+
+#mcpmate-root .el-chat-session-list li.is-current {
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-chat-session-list a {
+  overflow: hidden;
+  color: var(--el-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#mcpmate-root .el-chat-session-list a[aria-current="page"] {
+  font-weight: 600;
+}
+
+#mcpmate-root .el-chat-main {
+  display: grid;
+  gap: var(--el-space-4);
+  min-width: 0;
+}
+
+#mcpmate-root .el-chat-transcript {
+  display: grid;
+  gap: var(--el-space-3);
+}
+
+#mcpmate-root .el-chat-msg {
+  max-width: 48rem;
+  padding: var(--el-space-3) var(--el-space-4);
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius-lg);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-chat-msg.is-user {
+  justify-self: end;
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-chat-who {
+  margin: 0 0 var(--el-space-1);
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-chat-text {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+#mcpmate-root .el-chat-typing {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-chat-thinking,
+#mcpmate-root .el-chat-tool {
+  max-width: 48rem;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-chat-thinking summary,
+#mcpmate-root .el-chat-tool summary {
+  display: flex;
+  align-items: center;
+  gap: var(--el-space-2);
+  cursor: pointer;
+}
+
+#mcpmate-root .el-chat-tool-body {
+  display: grid;
+  gap: var(--el-space-2);
+  margin-block-start: var(--el-space-2);
+}
+
+#mcpmate-root .el-chat-tool-live {
+  display: flex;
+  align-items: center;
+  gap: var(--el-space-2);
+  margin: 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-chat-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--el-radius-full);
+  background: var(--el-neutral-dot);
+}
+
+#mcpmate-root .el-chat-dot.is-ok {
+  background: var(--el-success-dot);
+}
+
+#mcpmate-root .el-chat-dot.is-error {
+  background: var(--el-danger-dot);
+}
+
+#mcpmate-root .el-chat-dot.is-approval,
+#mcpmate-root .el-chat-dot.is-pending {
+  background: var(--el-warning-dot);
+}
+
+#mcpmate-root .el-chat-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-2);
+  margin: var(--el-space-2) 0 0;
+  padding: 0;
+  font-size: var(--el-text-sm);
+  list-style: none;
+}
+
+#mcpmate-root .el-chat-images li {
+  padding: var(--el-space-1) var(--el-space-2);
+  border-radius: var(--el-radius-sm);
+  background: var(--el-neutral-bg);
+}
+
+#mcpmate-root .el-chat-plan-list {
+  display: grid;
+  gap: var(--el-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-chat-plan-note,
+#mcpmate-root .el-chat-help {
+  margin: var(--el-space-3) 0 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+}
+
+#mcpmate-root .el-chat-plan-actions,
+#mcpmate-root .el-chat-composer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-3);
+  margin-block-start: var(--el-space-3);
+}
+
+#mcpmate-root .el-chat-composer {
+  display: grid;
+}
+
+#mcpmate-root .el-chat-input {
+  width: 100%;
+  resize: vertical;
+}

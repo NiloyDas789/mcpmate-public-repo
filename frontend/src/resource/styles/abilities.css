@@ -1,0 +1,208 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: a ledger of the site's own plugins, each line with how many of its abilities AI apps may use, beside the table of them
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V3 · weakest: V, a source list beside a table is the familiar settings shape; kept because admins already read it at a glance, and the real plugin names and counts make it this site's own
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · AbilitiesLedger.tsx disables only antd checkboxes (an always-on row), styled by antd and ui.css · the source links are never disabled, so no :disabled rule is written here */
+
+/* ── Tools → Abilities: the ledger ─────────── */
+
+#mcpmate-root .el-ledger {
+  display: grid;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  gap: var(--el-space-6);
+  align-items: start;
+  min-width: 0;
+}
+
+#mcpmate-root .el-ledger.is-narrow {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-4);
+}
+
+/* The sources: a quieter neutral beside the table, as a sidebar is. */
+#mcpmate-root .el-ledger-sources {
+  position: sticky;
+  top: var(--el-space-12);
+  min-width: 0;
+  max-height: calc(100vh - var(--el-space-12) * 2);
+  overflow-y: auto;
+  padding: var(--el-space-2);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-ledger-sources ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-ledger-sources li {
+  margin: 0;
+}
+
+#mcpmate-root .el-ledger-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--el-space-3);
+  min-height: 36px;
+  padding: var(--el-space-2) var(--el-space-3);
+  border-radius: var(--el-radius-sm);
+  color: var(--el-text);
+  font-size: var(--el-text-base);
+  line-height: var(--el-text-base-leading);
+  text-decoration: none;
+  transition:
+    background-color var(--el-duration-fast) ease-out,
+    color var(--el-duration-fast) ease-out;
+}
+
+#mcpmate-root .el-ledger-source:hover {
+  background: var(--el-bg-surface);
+  color: var(--el-text);
+}
+
+#mcpmate-root .el-ledger-source:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 0;
+  box-shadow: none;
+  transition: none;
+}
+
+#mcpmate-root .el-ledger-source:active {
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-ledger-source.is-current {
+  background: var(--el-bg-surface);
+  color: var(--el-brand);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-ledger-source-name {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+#mcpmate-root .el-ledger-source-count {
+  flex: none;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+#mcpmate-root .el-ledger-source.is-current .el-ledger-source-count {
+  color: var(--el-brand);
+}
+
+#mcpmate-root .el-ledger-select {
+  display: grid;
+  gap: var(--el-space-1);
+  max-width: 24rem;
+}
+
+/* ── The open source ───────────────────────── */
+
+#mcpmate-root .el-ledger-panel {
+  display: grid;
+  gap: var(--el-space-4);
+  min-width: 0;
+}
+
+#mcpmate-root .el-ledger-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--el-space-3) var(--el-space-6);
+}
+
+#mcpmate-root .el-ledger-head > div {
+  min-width: 0;
+}
+
+#mcpmate-root .el-ledger-title {
+  min-width: 0;
+  margin: 0;
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  line-height: var(--el-text-lg-leading);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+#mcpmate-root .el-ledger-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-1) var(--el-space-3);
+  margin: var(--el-space-1) 0 0;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+  font-variant-numeric: tabular-nums;
+}
+
+#mcpmate-root .el-ledger-summary-on {
+  color: var(--el-text);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-ledger-all {
+  min-height: 36px;
+  align-items: center;
+}
+
+/* The row header is the ability's name: on the table's own surface, not a grey stripe. */
+#mcpmate-root .el-ledger-panel .ant-table-tbody > tr > th {
+  background: var(--el-bg-surface);
+  font-weight: 400;
+}
+
+/* The table: the On column hugs its checkbox, Access hugs its badges. */
+#mcpmate-root .el-ledger-panel .ant-table-thead > tr > th:first-child,
+#mcpmate-root .el-ledger-panel .ant-table-tbody > tr > td:first-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+#mcpmate-root .el-ledger-ability {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+#mcpmate-root .el-ledger-ability-label {
+  color: var(--el-text);
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+#mcpmate-root .el-ledger-ability-note,
+#mcpmate-root .el-ledger-ability-description {
+  max-width: 68ch;
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-ledger-kind {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--el-space-2);
+}
+
+/* The skeleton's two panes. */
+#mcpmate-root .el-ledger .el-skeleton {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mcpmate-root .el-ledger-source {
+    transition: none;
+  }
+}

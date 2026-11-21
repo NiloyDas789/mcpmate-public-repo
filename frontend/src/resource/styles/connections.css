@@ -1,0 +1,272 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: the AI apps that can act on this site as the page's one heavy object, each named with the address it proved and the WordPress user it acts as, under the MCP URL that brings a new one in
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: V, stacked sections are the familiar admin shape; kept because the keyboard order (URL, apps, clients, sign-in) is the order an admin works in, and the weight now follows it
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · the Connections components add no control of their own · every Button, CopyField, Toggle and Table comes from components/ui, whose disabled and active states ui.css styles (.el-btn:disabled, .el-copy-row) */
+
+/* ── Connections ───────────────────────────── */
+
+/* Section titles are headings in sentence case, sized by weight of the
+   section: not the small tracked capitals cards use elsewhere. */
+#mcpmate-root .el-connections .el-card-title {
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: var(--el-text-lg-leading);
+  text-transform: none;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+#mcpmate-root .el-connections .el-card-title[tabindex="-1"]:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+}
+
+/* Captions are a quiet line at the top of a table's panel. */
+#mcpmate-root .el-connections .ant-table-caption {
+  padding: var(--el-space-3) var(--el-space-4);
+  border-block-end: 1px solid var(--el-border);
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 400;
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-connections .el-table-caption {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 400;
+}
+
+/* The row header names the app or client: on the table's surface, no grey stripe. */
+#mcpmate-root .el-connections .ant-table-tbody > tr > th {
+  background: var(--el-bg-surface);
+  font-weight: 400;
+}
+
+/* Narrow: each row is a list item with hairlines, not a card in the card;
+   its heading's weight stays on the name alone. */
+#mcpmate-root .el-connections .el-table-card {
+  padding: var(--el-space-4) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+#mcpmate-root .el-connections .el-table-card + .el-table-card {
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-connections .el-table-cards {
+  gap: 0;
+}
+
+#mcpmate-root .el-connections .el-table-card-title {
+  font-weight: 400;
+}
+
+#mcpmate-root .el-connections .el-table-card-row {
+  grid-template-columns: 7rem minmax(0, 1fr);
+}
+
+/* ── Your MCP URL: the way in ──────────────── */
+
+#mcpmate-root .el-mcp-url {
+  border-radius: var(--el-radius-lg);
+}
+
+#mcpmate-root .el-mcp-url .el-copy {
+  max-width: 56rem;
+}
+
+#mcpmate-root .el-mcp-url .el-copy-input {
+  min-height: 2.75rem;
+  font-size: var(--el-text-md);
+  line-height: var(--el-text-md-leading);
+}
+
+#mcpmate-root .el-details-list {
+  display: grid;
+  gap: var(--el-space-1);
+  max-width: 56rem;
+  margin: var(--el-space-2) 0 0;
+  padding: var(--el-space-3) 0 0;
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-details-row {
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  gap: var(--el-space-3);
+}
+
+#mcpmate-root .el-details-row dt {
+  color: var(--el-text-secondary);
+}
+
+#mcpmate-root .el-details-row dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── AI apps: the page's one heavy object ──── */
+
+#mcpmate-root .el-apps {
+  border-radius: var(--el-radius-lg);
+}
+
+#mcpmate-root .el-app-name {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Name, then the address it proved (or "not verified"), on one line. */
+#mcpmate-root .el-app-name-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--el-space-2);
+  min-width: 0;
+}
+
+#mcpmate-root .el-app-name-line .el-mono {
+  color: var(--el-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-app-acts {
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  line-height: var(--el-text-sm-leading);
+}
+
+#mcpmate-root .el-revoked-list {
+  margin: var(--el-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mcpmate-root .el-revoked-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--el-space-1) var(--el-space-6);
+  margin: 0;
+  padding: var(--el-space-3) 0;
+}
+
+#mcpmate-root .el-revoked-item + .el-revoked-item {
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-revoked-when {
+  display: grid;
+  gap: 2px;
+  justify-items: end;
+  text-align: end;
+}
+
+/* Revoke all: set apart at the card's foot, the one destructive action. */
+#mcpmate-root .el-revoke-all {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--el-space-3) var(--el-space-6);
+  padding-block-start: var(--el-space-4);
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-revoke-all > div {
+  min-width: 0;
+  max-width: 68ch;
+}
+
+/* ── Registered clients: quieter, on the page ── */
+
+#mcpmate-root .el-clients {
+  padding: var(--el-space-2) 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+#mcpmate-root .el-clients .el-card-title {
+  font-size: var(--el-text-md);
+  line-height: var(--el-text-md-leading);
+}
+
+@media (width < 600px) {
+  #mcpmate-root .el-details-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  #mcpmate-root .el-revoked-when {
+    justify-items: start;
+    text-align: start;
+  }
+}
+
+/* ── AI app logos ──────────────────────────── */
+
+/* The logo, then the name block, in one cell. */
+#mcpmate-root .el-app-ident {
+  display: flex;
+  align-items: center;
+  gap: var(--el-space-3);
+  min-width: 0;
+}
+
+/* The logo on its square; an app no brand verified shows its initial. */
+#mcpmate-root .el-app-logo {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius);
+  background: var(--el-bg-surface);
+}
+
+#mcpmate-root .el-app-logo img {
+  display: block;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+#mcpmate-root .el-app-logo:has(.el-app-logo-initial) {
+  background: var(--el-neutral-bg);
+}
+
+#mcpmate-root .el-app-logo-initial {
+  color: var(--el-neutral-text);
+  font-size: var(--el-text-sm);
+  font-weight: 600;
+  line-height: 1;
+}
+
+#mcpmate-root .el-app-logo-sm {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: var(--el-radius-sm);
+}
+
+#mcpmate-root .el-app-logo-sm img {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+#mcpmate-root .el-app-logo-sm .el-app-logo-initial {
+  font-size: var(--el-text-xs);
+}
+
+#mcpmate-root .el-tab-icon {
+  display: inline-flex;
+}

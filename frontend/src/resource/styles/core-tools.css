@@ -1,0 +1,247 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: every Core tool on one switchboard, each group a band over its tools, the tool names and access lined up in columns so what AI apps may write reads at a glance
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: P, a grouped list is the familiar settings shape; kept because each group's switch is the action admins come for, and the aligned columns are what the old cards lacked
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · the switchboard adds no control of its own: antd checkboxes, Toggle and the Show/Hide button · their disabled and active states are styled by antd and ui.css (an always-on tool is a disabled checkbox), which this file does not repeat */
+
+/* ── Tools → Core: the switchboard ─────────── */
+
+/* Outside the switchboard too (a plugin's dialog on Integrations): the
+   access badges in one run, the counts set apart by space, not a dot. */
+#mcpmate-root .el-tool-access {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--el-space-2);
+}
+
+#mcpmate-root .el-group-counts {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 var(--el-space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+#mcpmate-root .el-group-counts-on {
+  color: var(--el-text);
+  font-weight: 600;
+}
+
+#mcpmate-root .el-tools-unavailable .el-group-counts-on {
+  color: inherit;
+  font-weight: 400;
+}
+
+/* One surface for every group. The indent puts a tool's checkbox under its
+   group's name: the band's inline padding plus a checkbox and its gap. */
+#mcpmate-root .el-switchboard {
+  --el-sb-pad: var(--el-space-4);
+  --el-sb-indent: calc(var(--el-space-4) + var(--el-space-6));
+  --el-sb-label: 18rem;
+  --el-sb-name: 13rem;
+  --el-sb-access: 12rem;
+
+  container-type: inline-size;
+  min-width: 0;
+  border: 1px solid var(--el-border);
+  border-radius: var(--el-radius-lg);
+  background: var(--el-bg-surface);
+  overflow: clip;
+}
+
+#mcpmate-root .el-switchboard > .el-checkbox-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* The skeleton rows while the tools load. */
+#mcpmate-root .el-switchboard > div.el-checkbox-group:not(.el-tools-unavailable) {
+  padding: var(--el-space-3) var(--el-sb-pad);
+}
+
+#mcpmate-root .el-switchboard > .el-checkbox-group + .el-checkbox-group {
+  border-block-start: 1px solid var(--el-border);
+}
+
+/* ── A group's band: its switch, tool name, counts, Show and Hide ── */
+
+#mcpmate-root .el-switchboard .el-checkbox-group-legend {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  margin: 0;
+  padding: 0 var(--el-space-4) 0 var(--el-sb-pad);
+  background: var(--el-bg-subtle);
+}
+
+/* Beside the floated legend (a flex box keeps clear of floats): together, the band. */
+#mcpmate-root .el-switchboard .el-checkbox-group-head {
+  min-height: 3rem;
+  padding: var(--el-space-2) var(--el-sb-pad);
+  background: var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-group-name {
+  color: var(--el-text);
+}
+
+/* ── The tools, in columns ─────────────────── */
+
+#mcpmate-root .el-switchboard .el-checkbox-group-items {
+  padding: 0;
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-item {
+  display: grid;
+  grid-template-columns:
+    minmax(0, var(--el-sb-label))
+    minmax(0, var(--el-sb-name))
+    minmax(0, var(--el-sb-access))
+    minmax(0, 1fr);
+  gap: var(--el-space-1) var(--el-space-6);
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--el-space-2) var(--el-sb-pad) var(--el-space-2) var(--el-sb-indent);
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-item + .el-checkbox-item {
+  border-block-start: 1px solid var(--el-bg-subtle);
+}
+
+/* Which row the pointer or the focus is on, across the wide columns. */
+#mcpmate-root .el-switchboard .el-checkbox-item:hover,
+#mcpmate-root .el-switchboard .el-checkbox-item:focus-within {
+  background: var(--el-bg-page);
+}
+
+/* The name and the access are cells of the row, not a run after the label. */
+#mcpmate-root .el-switchboard .el-checkbox-item-meta {
+  display: contents;
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-item > .ant-checkbox-wrapper {
+  grid-column: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+#mcpmate-root .el-switchboard .el-tool-name {
+  grid-column: 2;
+  min-width: 0;
+  color: var(--el-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+#mcpmate-root .el-switchboard .el-tool-access {
+  grid-column: 3;
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-item-note {
+  grid-column: 4;
+  min-width: 0;
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-item-description {
+  grid-column: 1 / -1;
+  max-width: 72ch;
+}
+
+/* A group's own setting (Allow SVG files, the stock photos key). */
+#mcpmate-root .el-switchboard .el-checkbox-group-option {
+  margin: 0;
+  padding: var(--el-space-3) var(--el-sb-pad) var(--el-space-4) var(--el-sb-indent);
+  border-block-start: 1px solid var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-switchboard .el-checkbox-group-option > * {
+  max-width: calc(var(--el-sb-label) + var(--el-sb-name) + var(--el-space-6));
+}
+
+/* ── A group the site cannot run ───────────── */
+
+#mcpmate-root .el-switchboard .el-tools-unavailable-head {
+  min-height: 3rem;
+  padding: var(--el-space-2) var(--el-sb-pad);
+  background: var(--el-bg-subtle);
+}
+
+#mcpmate-root .el-switchboard .el-tools-unavailable-body {
+  margin: 0;
+  padding: var(--el-space-3) var(--el-sb-pad) var(--el-space-3) var(--el-sb-indent);
+  border-block-start: 1px solid var(--el-border);
+}
+
+#mcpmate-root .el-switchboard .el-tools-unavailable > :not(p) {
+  padding: 0 var(--el-sb-pad) var(--el-space-4) var(--el-sb-indent);
+}
+
+/* ── Narrower: the access beside the label, the name under it ── */
+
+@container (width < 52rem) {
+  #mcpmate-root .el-switchboard .el-checkbox-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--el-space-3);
+  }
+
+  #mcpmate-root .el-switchboard .el-tool-access {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: end;
+  }
+
+  #mcpmate-root .el-switchboard .el-tool-name,
+  #mcpmate-root .el-switchboard .el-checkbox-item-note {
+    grid-column: 1 / -1;
+    padding-inline-start: var(--el-space-6);
+  }
+}
+
+/* Phone width: one column, the name and the access on the line under the label. */
+@container (width < 30rem) {
+  #mcpmate-root .el-switchboard {
+    --el-sb-pad: var(--el-space-3);
+    --el-sb-indent: calc(var(--el-space-3) + var(--el-space-6));
+  }
+
+  /* The band stacks: the switch on its own line, the counts and Show/Hide under it. */
+  #mcpmate-root .el-switchboard .el-checkbox-group-legend {
+    float: none;
+    width: 100%;
+    min-height: 2.75rem;
+    padding-block-start: var(--el-space-1);
+  }
+
+  #mcpmate-root .el-switchboard .el-checkbox-group-head {
+    justify-content: flex-start;
+    min-height: 0;
+    padding-block: 0 var(--el-space-2);
+    padding-inline-start: var(--el-sb-indent);
+  }
+
+  #mcpmate-root .el-switchboard .el-checkbox-group-head .el-disclosure {
+    margin-inline-start: auto;
+  }
+
+  #mcpmate-root .el-switchboard .el-checkbox-item {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  #mcpmate-root .el-switchboard .el-checkbox-item > .ant-checkbox-wrapper {
+    grid-column: 1 / -1;
+  }
+
+  #mcpmate-root .el-switchboard .el-tool-name {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  #mcpmate-root .el-switchboard .el-tool-access {
+    grid-column: 2;
+    grid-row: 2;
+    justify-content: start;
+  }
+}

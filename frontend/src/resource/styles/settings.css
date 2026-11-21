@@ -1,0 +1,196 @@
+/* Hallmark · checked: 2026-11-15 · genre: modern-minimal (inferred) · shape: app screen · scope: app · tokens: the project's --el-* (config/tokens.ts) · signature: the site's whole posture in one column, every setting's current value (a select, a switch, "Always on", a count) lined up down the inline-end edge of each section so an admin reads what MCPMate does here top to bottom
+ * Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: V, sections as bordered forms are the familiar settings shape; kept because each card is exactly what one Save changes sends, and the value column is what the old ragged right edge lacked
+ * built: the project · redesign: full · v2.0.0 */
+
+/* Hallmark · waive 26b · the Settings page adds no control of its own: every select, Toggle, CheckboxGroup and Button comes from ui.css · their disabled and active states are styled there (.el-native-select:disabled, .el-btn:active, antd's Switch), which this file does not repeat */
+
+/* ── Settings ──────────────────────────────── */
+
+/* The width a value takes at the inline-end of a row: wide enough for
+   "Tokens 15 minutes, approvals 30 days" over its button. */
+#mcpmate-root .el-settings {
+  --el-settings-value: 17rem;
+}
+
+/* Section titles are headings in sentence case, not the small tracked
+   capitals cards use elsewhere: each one names what its Save changes sends. */
+#mcpmate-root .el-settings .el-card-title {
+  color: var(--el-text);
+  font-size: var(--el-text-lg);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: var(--el-text-lg-leading);
+  text-transform: none;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+#mcpmate-root .el-settings .el-card {
+  container-type: inline-size;
+  border-radius: var(--el-radius-lg);
+}
+
+#mcpmate-root .el-settings .el-card-head {
+  margin-block-end: var(--el-space-2);
+}
+
+/* ── Rows: text, then the value column ─────── */
+
+#mcpmate-root .el-settings .el-setting-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-2);
+  padding-block: var(--el-space-4);
+}
+
+#mcpmate-root .el-settings .el-setting-row:first-of-type {
+  padding-block-start: var(--el-space-2);
+}
+
+#mcpmate-root .el-settings .el-setting-hint {
+  max-width: 62ch;
+  margin-block-start: var(--el-space-1);
+}
+
+#mcpmate-root .el-settings .el-setting-control {
+  justify-items: start;
+  min-width: 0;
+}
+
+/* A fact and the page that changes it, one over the other. */
+#mcpmate-root .el-settings .el-setting-inline {
+  display: grid;
+  justify-items: start;
+  gap: var(--el-space-2);
+}
+
+#mcpmate-root .el-settings .el-always-on {
+  min-height: 2rem;
+}
+
+/* A switch row: the switch and its On/Off in the value column too. */
+#mcpmate-root .el-settings .el-setting-row > .el-toggle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--el-space-2);
+  padding-block: 0;
+}
+
+#mcpmate-root .el-settings .el-setting-row > .el-toggle .el-toggle-description {
+  max-width: 62ch;
+  margin-block-start: var(--el-space-1);
+}
+
+#mcpmate-root .el-settings .el-toggle-control {
+  min-height: 2rem;
+}
+
+/* The full-width rows (instructions text, the preview) stay one column. */
+#mcpmate-root .el-settings .el-setting-row.el-setting-stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container (width >= 36rem) {
+  #mcpmate-root .el-settings .el-setting-row,
+  #mcpmate-root .el-settings .el-setting-row > .el-toggle {
+    grid-template-columns: minmax(0, 1fr) var(--el-settings-value);
+    column-gap: var(--el-space-8);
+    align-items: start;
+  }
+
+  #mcpmate-root .el-settings .el-setting-row > .el-toggle {
+    grid-column: 1 / -1;
+  }
+
+  #mcpmate-root .el-settings .el-setting-row > .el-checkbox-group {
+    grid-column: 1 / -1;
+  }
+
+  #mcpmate-root .el-settings .el-setting-row.el-setting-stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Record changes to: under its switch, not a box in a box ── */
+
+#mcpmate-root .el-settings .el-setting-nested {
+  padding-block-start: 0;
+  padding-inline-start: 0;
+  border-block-start: 0;
+}
+
+#mcpmate-root .el-settings .el-setting-nested > .el-checkbox-group {
+  margin: 0;
+  padding: var(--el-space-1) 0 var(--el-space-1) var(--el-space-4);
+  border: 0;
+  border-inline-start: 2px solid var(--el-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ── The save bar sits flush with the card's foot ── */
+
+#mcpmate-root .el-settings .el-save-bar {
+  margin-block-start: var(--el-space-2);
+}
+
+/* ── On this page ──────────────────────────── */
+
+#mcpmate-root .el-settings.is-wide {
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: var(--el-space-8);
+}
+
+#mcpmate-root .el-settings-nav-title {
+  margin: 0 0 var(--el-space-2);
+  padding-inline-start: var(--el-space-3);
+  color: var(--el-text-secondary);
+  font-size: var(--el-text-sm);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: var(--el-text-sm-leading);
+  text-transform: none;
+}
+
+#mcpmate-root .el-settings-nav ul {
+  gap: 0;
+}
+
+/* Each link reads as text; the section in view carries a bar at its
+   inline-start edge and the full text colour. */
+#mcpmate-root .el-settings-nav a {
+  display: block;
+  padding: var(--el-space-2) var(--el-space-3);
+  border-inline-start: 2px solid var(--el-border);
+  border-start-end-radius: var(--el-radius-sm);
+  border-end-end-radius: var(--el-radius-sm);
+  color: var(--el-text-secondary);
+  text-decoration: none;
+}
+
+#mcpmate-root .el-settings-nav a:hover,
+#mcpmate-root .el-settings-nav a[data-el-state="hover"] {
+  background: var(--el-bg-subtle);
+  color: var(--el-text);
+}
+
+#mcpmate-root .el-settings-nav a:active {
+  background: var(--el-bg-brand-tint);
+}
+
+#mcpmate-root .el-settings-nav a:focus-visible {
+  outline: 2px solid var(--el-focus);
+  outline-offset: 2px;
+}
+
+#mcpmate-root .el-settings-nav a[aria-current] {
+  border-inline-start-color: var(--el-brand);
+  color: var(--el-text);
+  font-weight: 600;
+}
+
+@media (forced-colors: active) {
+  #mcpmate-root .el-settings-nav a[aria-current] {
+    border-inline-start-color: Highlight;
+  }
+}
